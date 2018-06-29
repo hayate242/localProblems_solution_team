@@ -1,0 +1,21 @@
+<html>
+  <head>
+		<meta charset="utf-8"/>
+    <link rel="stylesheet" href="graph.css">
+	<!--Load the AJAX API-->
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<script src="readCSV.js"></script>
+
+  </head>
+
+  <body>
+    <!--Div that will hold the pie chart-->
+    <div id="chart_div"></div>
+	<form action="">
+		<input type="button" value="ファイル読み込み"
+			onClick="loadCSV('20180628.csv')" />　
+	</form>
+	<h2>防犯カメラ装置の計測電流値</h2>
+	<div id="graph_content"></div>
+  </body>
+</html>

@@ -1,0 +1,30 @@
+<html>
+<head><title>サーバー上のテキストファイルを読み込む</title>
+</head>
+<body>
+<script type="text/javascript">
+
+var fileName = "work_history.txt";
+document.write(fileName);
+
+   httpObj = new XMLHttpRequest();
+   httpObj.open('GET',fileName+"?"+(new Date()).getTime(),true);
+   // ?以降はキャッシュされたファイルではなく、毎回読み込むためのもの
+   httpObj.send(null);
+   httpObj.onreadystatechange = function(){
+      if ( (httpObj.readyState == 4) && (httpObj.status == 200) ){
+         document.getElementById("text1").value=httpObj.responseText;
+      }
+
+}
+</script>
+
+<input type="button" value="ファイル読み込み" 
+       onClick="loadFile('http://home.a00.itscom.net/hatada/_data/path.dat')" />　
+<input type="button" value="クリア" 
+       onClick="document.getElementById('text1').value='';" />
+<br>
+<textarea name="text1" cols="40" rows="20"></textarea>
+
+</body>
+</html>

@@ -1,0 +1,5 @@
+nakayama,eyemovic,1999/12/1,2000,
+koda,teacher,3333/2/11,100000,
+nakayama,eyemovic,1999/2/12,5000,
+nakayama,fuckingjob,1999/1/13,500,
+nakayama,fuckingjob,1999/10/3,500,
