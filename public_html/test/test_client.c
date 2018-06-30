@@ -1,170 +1,128 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
-#include <sys/types.h>
-#include <netdb.h>
-#include <netinet/in.h>
+#include <string.h> /* bzero */
+
+#include <sys/types.h> /* netinet/in.h */
+#include <sys/socket.h> /* AF_INET */
+#include <netinet/in.h> /* sockaddr_in */
+#include <netdb.h> /* gethostbyname */
+#include <sys/uio.h>
 #include <sys/param.h>
 #include <unistd.h>
+#include <time.h>
 
-#define BUF_LEN 256
 
-struct URL {
-    char host[BUF_LEN];
-    char path[BUF_LEN];
-    char query[BUF_LEN];
-    char fragment[BUF_LEN];
-    unsigned short port;
-};
+#define  DESTSERV "192.168.29.7"
+#define  DESTPORT 2000
+// #define  MESSAGE  "GET / HTTP/1.0\r\nHOST: 192.168.29.7\r\n\r\n"
+#define  MESSAGE  ":MAIN:DATA?\r\n" //最新の測定データを呼ぶ
+// #define  MESSAGE  ":MAIN:FUNC 0\r\n"
+#define  BUF_LEN  1024
+#define MAXSLEEP 1
 
-/**
- * @param urlStr URLテキスト
- */
-void parseURL(const char *urlStr, struct URL *url, char **error);
+int connect_retry(int sockfd, const struct sockaddr *addr, socklen_t alen)
+{
+    int nsec;
 
-int main(int argc, char **argv) {
+    /*
+     * Try to connect with exponential backoff.
+     */
 
-    // ソケットのためのファイルディスクリプタ
-    int s;
+    for (nsec = 1; nsec <= MAXSLEEP; nsec <<= 1) {
+        if (connect(sockfd, addr, alen) == 0) {
 
-    // IPアドレスの解決
-    struct addrinfo hints, *res;
-    struct in_addr addr;
-    int err;
+            /*
+             * Connection accepted.
+             */
 
-    // サーバに送るHTTPプロトコル用バッファ
-    char send_buf[BUF_LEN];
-
-    struct URL url = {
-        "192.168.29.7", "/", 2000
-    };
-
-    // URLが指定されていたら
-    if (argc > 1) {
-        char *error = NULL;
-        parseURL(argv[1], &url, &error);
-
-        if (error) {
-            printf("%s\n", error);
-            return 1;
+            return(0);
         }
+
+        /*
+         * Delay before trying again.
+         */
+
+        if (nsec <= MAXSLEEP/2)
+            sleep(nsec);
     }
-
-    printf("http://%s%s%s を取得します。\n\n", url.host, url.path, url.query);
-
-    // 0クリア
-    memset(&hints, 0, sizeof(hints));
-    hints.ai_socktype = SOCK_STREAM;
-    hints.ai_family   = AF_INET;
-
-    char *serviceType = "http";
-
-    if ((err = getaddrinfo(url.host, serviceType, &hints, &res)) != 0) {
-        printf("error %d\n", err);
-        return 1;
-    }
-
-    // ソケット生成
-    if ((s = socket(res->ai_family, res->ai_socktype, res->ai_protocol)) < 0) {
-        fprintf(stderr, "ソケットの生成に失敗しました。\n");
-        return 1;
-    }
-
-    // サーバに接続
-    if (connect(s, res->ai_addr, res->ai_addrlen) != 0) {
-        fprintf(stderr, "connectに失敗しました。\n");
-        return 1;
-    }
-
-    // HTTPプロトコルの開始 ＆サーバに送信
-    sprintf(send_buf, "GET %s%s HTTP/1.0\r\n", url.path, url.query);
-    write(s, send_buf, strlen(send_buf));
-
-    sprintf(send_buf, "Host: %s:%d\r\n", url.host, url.port);
-    write(s, send_buf, strlen(send_buf));
-
-    sprintf(send_buf, "\r\n");
-    write(s, send_buf, strlen(send_buf));
-
-    // 受信が終わるまでループ
-    while(1) {
-        char buf[BUF_LEN];
-        int read_size;
-        read_size = read(s, buf, BUF_LEN);
-
-        if (read_size > 0) {
-            write(1, buf, read_size);
-        }
-        else {
-            break;
-        }
-    }
-
-    // ソケットを閉じる
-    close(s);
-
-    return 0;
+    return(-1);
 }
 
+int main() {
 
-void parseURL(const char *urlStr, struct URL *url, char **error) {
-    char host_path[BUF_LEN];
+    struct hostent *hostent;
+    struct sockaddr_in server;
 
-    if (strlen(urlStr) > BUF_LEN - 1) {
-        *error = "URLが長過ぎます。\n";
-        return;
+    int fd;
+    int portNUM = 0;
+    int serverWroteByte;
+    char buf[BUF_LEN]; /* receive buffer */
+
+    //csv file write setteings
+    FILE *fp;
+    char *fname = "20180628.csv";
+//   time variables
+    time_t timer;
+    struct tm *local;
+
+
+    hostent = gethostbyname(DESTSERV); /* lookup IP */
+    printf("%s\n", hostent->h_name);
+    if (hostent == NULL ) {
+        fprintf(stderr, "Cannot resolve %s.\n", DESTSERV);
+        return 0;
     }
 
-    // http://から始まる文字列で
-    // sscanfが成功して
-    // http://の後に何か文字列が存在するなら
-    if (strstr(urlStr, "http://")              &&
-        sscanf(urlStr, "http://%s", host_path) &&
-        strcmp(urlStr, "http://")) {
+    bzero(&server, sizeof(server)); /* zero clear struct */
 
-        char *p = NULL;
+    server.sin_family = AF_INET;
+    /* server.sin_addr = hostent->h_addr */
+    bcopy(hostent->h_addr, &server.sin_addr, hostent->h_length);
 
-        p = strchr(host_path, '#');
-        if (p != NULL) {
-            strcpy(url->fragment, p);
-            *p = '\0';
-        }
-
-        p = strchr(host_path, '?');
-        if (p != NULL) {
-            strcpy(url->query, p);
-            *p = '\0';
-        }
-
-        p = strchr(host_path, '/');
-        if (p != NULL) {
-            strcpy(url->path, p);
-            *p = '\0';
-        }
-
-        strcpy(url->host, host_path);
-
-        // ホスト名の部分に":"が含まれていたら
-        p = strchr(url->host, ':');
-        if (p != NULL) {
-            // ポート番号を取得
-            url->port = atoi(p + 1);
-
-            // 数字ではない（atoiが失敗）か、0だったら
-            // ポート番号は80に決め打ち
-            if (url->port <= 0) {
-                url->port = 80;
-            }
-
-            // 終端文字で空にする
-            *p = '\0';
-        }
-        else {
-            url->port = 80;
-        }
+    server.sin_port = htons(DESTPORT);
+    // making socket
+    if ( ( fd = socket(AF_INET, SOCK_STREAM, 0) ) < 0) {
+        fprintf(stderr, "Cannot make socket.\n");
+        return 0;
     }
-    else {
-        *error = "URLはhttp://host/pathの形式で指定してください。\n";
-        return;
+    // connection start
+    printf("connection started\n");
+    if ( connect(fd, (struct sockaddr *)&server, sizeof(server)) == -1) {
+        fprintf(stderr, "Cannot connect.\n");
+        return 0;
+    }else {
+        printf("Connection Established! connected port = %d\n", DESTPORT);
     }
+
+    /* Receive data */
+    while (1) {   
+        
+        // file open
+        fp = fopen( fname, "a" );
+        if( fp == NULL ){
+          printf( "%sファイルが開けません¥n", fname );
+          return -1;
+        }
+        /* 現在時刻を取得 */
+        timer = time(NULL);
+        local = localtime(&timer); /* 地方時に変換 */
+
+        serverWroteByte = write(fd, MESSAGE, strlen(MESSAGE));
+        // printf("wrote to server %d bytes\n", serverWroteByte);
+        read(fd, buf, BUF_LEN);
+        printf("%2d:%2d:%2d,%s", local->tm_hour, local->tm_min, local->tm_sec, buf);
+     
+        fprintf( fp, "%2d:%2d:%2d,%s", local->tm_hour, local->tm_min, local->tm_sec, buf);
+        // fprintf( fp, "%s\n", "aaaaaaa");
+        sleep(1);
+        fclose( fp );
+        // printf( "%sファイル書き込みが終わりました¥n", fname );
+        close(fd);
+        // retry to connect
+        // if( connect_retry(fd,(struct sockaddr *)&server,sizeof(server)) == -1 ){
+        //     printf("Cannot connect_retry.\n");
+        // }
+    }
+    close(fd);
+    return 0;
 }

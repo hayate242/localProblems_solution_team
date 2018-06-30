@@ -73,10 +73,11 @@ int main() {
           printf( "%sファイルが開けません¥n", fname );
           return -1;
         }
-        
         /* 現在時刻を取得 */
         timer = time(NULL);
         local = localtime(&timer); /* 地方時に変換 */
+
+        
         serverWroteByte = write(fd, MESSAGE, strlen(MESSAGE));
         // printf("wrote to server %d bytes\n", serverWroteByte);
         read(fd, buf, BUF_LEN);
