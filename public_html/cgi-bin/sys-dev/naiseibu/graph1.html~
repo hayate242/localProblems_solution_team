@@ -1,0 +1,168 @@
+<html>
+  <head>
+		<meta charset="utf-8"/>
+    <link rel="stylesheet" href="graph.css">
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+			var username = "nakayama";
+			var jobName = [];
+			var date = [];
+			var wage = [];
+
+			var num = new Array(12);
+			
+       
+      function loadHtml(fileName){
+					var cnt = 0;
+
+          httpObj = new XMLHttpRequest();
+          httpObj.open('GET',fileName+"?"+(new Date()).getTime(),true);
+          // ?以降はキャッシュされたファイルではなく、毎回読み込むためのもの
+          httpObj.send(null);
+          httpObj.onreadystatechange = function(){
+              if ( (httpObj.readyState == 4) && (httpObj.status == 200) ){
+                  paths = httpObj.responseText.split(",");
+				
+      	    var out = "";
+      	    for (n = 0; n < paths.length; n++) {
+								paths[n] = paths[n].replace(/\r?\n/g,"");
+								paths[n] = paths[n].replace(" ","");
+							//ユーザ名と等しいならデータ追加
+							if(paths[n] == username){
+								console.log("おなじ！！！");
+								jobName[cnt] = paths[n+1];
+								date[cnt] = paths[n+2].replace("/","<");
+								date[cnt] = date[cnt].replace("/",">");
+								wage[cnt] = parseInt(paths[n+3]);
+								//console.log(typeof wage[cnt]);
+
+								out += wage[cnt] ;
+								//console.log(jobName[cnt]);
+								//console.log(date[cnt]);
+								//console.log(wage[cnt]);
+								n += 3;
+								cnt++;
+							}
+      				//out +=  paths[n] + "\n";
+      				//document.write(paths[n]+'<br>');
+      	    }
+
+
+
+						//データを月別で分ける
+						var only_months = [];
+
+						for (n = 0; n < date.length; n++) {
+							console.log(n);
+							console.log(date[n]);
+							only_months[n] = date[n].match(/<(.*?)>/g);
+							console.log( "only_months = " + only_months[n] );
+						}
+						
+						for(n = 0; n < date.length; n++){
+							if(only_months == "<1>"){
+								this.num[0] += wage[n];
+							}
+							else if(only_months == "<2>"){
+								this.num[1] += wage[n];
+							}
+							else if(only_months == "<3>"){
+								this.num[2] += wage[n];
+							}
+							else if(only_months == "<4>"){
+								this.num[3] += wage[n];
+							}
+							else if(only_months == "<5>"){
+								this.num[4] += wage[n];
+							}
+							else if(only_months == "<6>"){
+								this.num[5] += wage[n];
+							}
+							else if(only_months == "<7>"){
+								this.num[6] += wage[n];
+							}
+							else if(only_months == "<8>"){
+								this.num[7] += wage[n];
+							}
+							else if(only_months == "<9>"){
+								this.num[8] += wage[n];
+							}
+							else if(only_months == "<10>"){
+								this.num[9] += wage[n];
+							}
+							else if(only_months == "<11>"){
+								this.num[10] += wage[n];
+							}
+							else if(only_months == "<12>"){
+								this.num[11] += wage[n];
+							}
+						}
+						for(n = 0; n < this.num.length; n++){
+							console.log("num[" + i + "] = " + this.num[i]);
+						}						
+      	    document.getElementById("out").innerHTML = out;
+							drawChart();
+              }
+          }
+
+// Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+          ['January', this.num[0]],
+          ['February', this.num[1]],
+          ['March', this.num[2]],
+          ['April', this.num[3]],
+          ['May', this.num[4]],
+          ['Jun', this.num[5]],
+          ['July', this.num[6]],
+          ['August', this.num[7]],
+          ['September', this.num[8]],
+          ['October', this.num[9]],
+          ['November', this.num[10]],
+          ['December', this.num[11]]
+        ]);
+
+        // Set chart options
+        var options = {'title':'How Much Pizza I Ate Last Night',
+                       'width':400,
+                       'height':300};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+
+      }
+
+
+      
+    </script>
+  </head>
+
+  <body>
+    <!--Div that will hold the pie chart-->
+    <div id="chart_div"></div>
+
+    <input type="button" value="ファイル読み込み"
+           onClick="loadHtml('http://ssh.cs.ehime-u.ac.jp/~e1589naka/cgi-bin/sys-dev/naiseibu/work_history.txt')" />　
+    <input type="button" value="クリア"
+           onClick="document.getElementById('out').innerHTML='';" />
+    <br>
+    <div id="out"></div>
+  </body>
+</html>

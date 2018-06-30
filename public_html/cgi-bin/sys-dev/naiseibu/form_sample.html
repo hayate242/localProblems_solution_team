@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>Sample2</title>
+<script type="text/javascript">
+    function Sample2(){
+        var hoge = Sample2_form.check.checked;
+        if(hoge == true){
+            alert("チェックが入っています");
+        }else{
+            alert("チェックが入っていません");
+        }
+    }
+</script>
+</head>
+ 
+<body>
+    <form name="Sample2_form" action="Sample2.html">
+        <input type="checkbox" name="check"/>チェックボックス
+        <input type="button" value="Sample2" onclick="Sample2()">
+    </form>
+</body>
+</html>
