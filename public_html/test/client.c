@@ -27,6 +27,7 @@ int main() {
     int portNUM = 0;
     int serverWroteByte;
     char buf[BUF_LEN]; /* receive buffer */
+    int gabage;
 
     //csv file write setteings
     FILE *fp;
@@ -82,12 +83,16 @@ int main() {
         // printf("wrote to server %d bytes\n", serverWroteByte);
         read(fd, buf, BUF_LEN);
         printf("%2d:%2d:%2d,%s", local->tm_hour, local->tm_min, local->tm_sec, buf);
-     
         fprintf( fp, "%2d:%2d:%2d,%s", local->tm_hour, local->tm_min, local->tm_sec, buf);
-        // fprintf( fp, "%s\n", "aaaaaaa");
         sleep(1);
         fclose( fp );
-        // printf( "%sファイル書き込みが終わりました¥n", fname );
+
+        /*:MAIN:DATA? is written in 20180628.csv when close connection
+        *   but if you don't close connection, other sockets can't connect
+        */
+        // if( close(fd) == -1 ){
+        //     printf("close error\n");
+        // }
     }
     close(fd);
     return 0;
