@@ -9,6 +9,7 @@ var layout = {
     title:''
 };
 let DATANUM = 6;
+// let DATANUM = 7; // for avoiding read csv :MAINDATA:?
 // responded data
 var res = [];
 var updateFlag = false;
@@ -31,6 +32,11 @@ function parseData(_paths){
     for (n = 0; n < paths.length ; n += DATANUM) {
         res[n/DATANUM] = new Info(_paths[n], _paths[n+1], _paths[n+2], _paths[n+3], _paths[n+4], _paths[n+5]);
     }
+    
+    // for avoiding read csv :MAINDATA:?
+    // for (n = 0; n < paths.length ; n += DATANUM) {
+    //     res[n/DATANUM] = new Info(_paths[n+1], _paths[n+2], _paths[n+3], _paths[n+4], _paths[n+5], _paths[n+6]);
+    // }
     res.pop();
     // replace value format to display on chart
     // for( i = 0; i < res.length; i++ ){
@@ -58,7 +64,7 @@ function plot_chart(){
         update_layout();
         updateFlag = true;
     }else {
-        Plotly.update( 'chart_div', data );
+        Plotly.react( 'chart_div', data );
         update_layout();
     }
 }

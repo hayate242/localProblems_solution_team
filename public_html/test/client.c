@@ -65,6 +65,7 @@ int main() {
         printf("Connection Established! connected port = %d\n", DESTPORT);
     }
 
+    int flag = 1;
     /* Receive data */
     while (1) {   
         
@@ -87,12 +88,13 @@ int main() {
         sleep(1);
         fclose( fp );
 
-        /*:MAIN:DATA? is written in 20180628.csv when close connection
-        *   but if you don't close connection, other sockets can't connect
+        /*:MAIN:DATA? is added in 20180628.csv when use close connection(close(fd);)
+        *   but if it don't close connection, other clients can't connect
         */
-        // if( close(fd) == -1 ){
-        //     printf("close error\n");
-        // }
+        if( flag ){
+            close(fd);
+            flag = 0;
+        }
     }
     close(fd);
     return 0;

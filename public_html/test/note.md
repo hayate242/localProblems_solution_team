@@ -43,6 +43,8 @@ write() でサーバにリクエストを送る
 read() でレスポンスを受信する
 close() によりソケットを閉じる
 http://blog.majide.com/2009/02/socket-programming-client/
+* テストコード
+curl -H ":MAIN:DATA?" 192.168.29.7:2000
 
 
 # 重要
