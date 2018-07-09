@@ -35,7 +35,7 @@ function parseData(_paths){
     
     // for avoiding read csv :MAINDATA:?
     // for (n = 0; n < paths.length ; n += DATANUM) {
-    //     res[n/DATANUM] = new Info(_paths[n+1], _paths[n+2], _paths[n+3], _paths[n+4], _paths[n+5], _paths[n+6]);
+        // res[n/DATANUM] = new Info(_paths[n], _paths[n+1], _paths[n+2], _paths[n+3], _paths[n+4], _paths[n+5]);
     // }
     res.pop();
     // replace value format to display on chart
@@ -99,6 +99,10 @@ function loadCSV(fileName){
 
 // main
 loadCSV('20180628.csv');
+window.onload = function(){
+    //1000ミリ秒（1秒）毎に関数「loadCSV()」を呼び出す
+    setInterval("loadCSV('20180628.csv')", 10000);
+}
 // var data = [ chart_data, options ];
 // Plotly.newPlot( 'chart_div', data );
 
