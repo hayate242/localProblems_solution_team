@@ -29,6 +29,7 @@ function Info(_Time, _Func, _Err, _Type, _Value, _TimeStamp) {
 }
 
 function parseData(_paths){
+    res = [];
     for (n = 0; n < paths.length ; n += DATANUM) {
         res[n/DATANUM] = new Info(_paths[n], _paths[n+1], _paths[n+2], _paths[n+3], _paths[n+4], _paths[n+5]);
     }
@@ -98,11 +99,11 @@ function loadCSV(fileName){
 }
 
 // main
-loadCSV('20180628.csv');
-window.onload = function(){
-    //1000ミリ秒（1秒）毎に関数「loadCSV()」を呼び出す
-    setInterval("loadCSV('20180628.csv')", 10000);
-}
+loadCSV('../data/20180628.csv');
+// window.onload = function(){
+//     //1000ミリ秒（1秒）毎に関数「loadCSV()」を呼び出す
+//     setInterval("loadCSV('../data/20180628.csv')", 10000);
+// }
 // var data = [ chart_data, options ];
 // Plotly.newPlot( 'chart_div', data );
 

@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>JavaScript | 情報システム開発演習</title>
+    <script type="text/javascript">
+
+    function doit(e) {
+      // console.log(e);
+      var elem = document.getElementById("b");
+      // console.log(elem);
+      // 取得したelementのidをstring に変換
+      var str = e.toString();
+      // console.log(str);
+      // 取得した要素の背景色を変更する
+      elem.style.backgroundColor = str;
+      var elemdiv = document.getElementById("current");
+      elemdiv.innerHTML = str;
+
+
+    }
+
+    </script>
+    <style type="text/css">
+<!--
+-->
+    </style>
+  </head>
+
+  <body id="b">
+    <p> current color is:</p>
+    <div id="current" style="border: 1px black solid; width: 200px; height: 200px"> </div>
+
+    <p>click one of followings:</p>
+    <span id="red" onclick="doit(this.id)">red</span>
+    <span id="blue" onclick="doit(this.id)">blue</span>
+    <span id="green" onclick="doit(this.id)">green</span>
+    <span id="yellow" onclick="doit(this.id)">yellow</span>
+  </body>
+</html>
+
+<!--
+    Local Variables:
+    mode: html
+    fill-column: 210
+    End:
+-->

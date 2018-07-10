@@ -1,0 +1,59 @@
+<!DOCTYPE html> 
+<html lang="ja">
+<meta charset="utf-8"> 
+<title>シフト登録</title>
+<body bgcolor onLoad="functionName()">
+<form name="formName" method="post" action="./pathToProgramFile">
+<font size="5">シフト登録</font>
+<p><!--選択肢その1-->
+<b> 勤務先：</b>
+<select name = "selectName1" onChange="functionName()">
+<option value = "居酒屋">居酒屋</option>
+<option value = "カラオケ">カラオケ</option>
+<option value = "家庭教師">家庭教師</option>
+</select></p>
+<p><!--選択肢その2（選択肢その1の項目によって変化）-->
+<b> 時給：</b>
+<select name = "selectName2">
+</select></p>
+<td align="right"><b> 時間：</b></td>
+<td><input type="text" name="name" size="30" maxlength="20"></td>
+</p>
+<button type="button" name="aaa" value="aaa">
+<font size="5" color="#333399">登録</font>
+</button>
+<p></body></p>
+ 
+
+
+<script type = "text/javascript">
+<!--
+function functionName()
+    {
+        var select1 = document.forms.formName.selectName1; //変数select1を宣言
+        var select2 = document.forms.formName.selectName2; //変数select2を宣言
+
+        select2.options.length = 0; // 選択肢の数がそれぞれに異なる場合、これが重要
+         
+        if (select1.options[select1.selectedIndex].value == "居酒屋")
+            {
+                select2.options[0] = new Option("(平日)900円");
+                select2.options[1] = new Option("(休祝日)1000円");
+            }
+         
+        else if (select1.options[select1.selectedIndex].value == "カラオケ")
+            {
+                select2.options[0] = new Option("(平日)800円");
+                select2.options[1] = new Option("(休祝日)900円");
+            }
+         
+        else if (select1.options[select1.selectedIndex].value == "家庭教師")
+            {
+                select2.options[0] = new Option("(平日)1000円");
+                select2.options[1] = new Option("(休祝日)1200円");
+            }
+    }
+ 
+//-->
+</script>
+</html>

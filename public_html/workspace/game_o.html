@@ -1,0 +1,97 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<p><span>G</span><span>A</span><span>M</span><span>E</span><span>&nbsp;</span><span>O</span><span>V</span><span>E</span><span>R</span></p>
+
+<style>
+@import "compass/css3";
+
+@import url(https://fonts.googleapis.com/css?family=Finger+Paint);
+
+body {
+  background: black;
+  overflow: hidden;
+  font: 100px/300px "Finger Paint";
+  text-align: center;
+  color: transparent;
+  backface-visibility: hidden;
+}
+
+span {
+  display: inline-block;
+  text-shadow: 0 0 0 whitesmoke;
+  animation: smoky 5s 3s both;
+}
+
+span:nth-child(even){
+  animation-name: smoky-mirror;
+}
+
+@keyframes smoky {
+  60% {
+    text-shadow: 0 0 40px whitesmoke;
+  }
+  to {
+    transform:
+      translate3d(15rem,-8rem,0)
+      rotate(-40deg)
+      skewX(70deg)
+      scale(1.5);
+    text-shadow: 0 0 20px whitesmoke;
+    opacity: 0;
+  }
+}
+
+@keyframes smoky-mirror {
+  60% {
+    text-shadow: 0 0 40px whitesmoke; }
+  to {
+    transform:
+      translate3d(18rem,-8rem,0)
+      rotate(-40deg) 
+      skewX(-70deg)
+      scale(2);
+     text-shadow: 0 0 20px whitesmoke;
+    opacity: 0;
+  }
+}
+
+@for $item from 1 through 21 {
+  span:nth-of-type(#{$item}){ 
+    animation-delay: #{(3 + ($item/10))}s; 
+  }
+} 
+</style>
+
+<div class="skull"><img src="over.jpeg" align="right"></div>
+
+<p><a href="#" class="btn">TOP</a></p>
+
+<style>
+.skull{
+  position: relative;
+  bottom: 75px;
+  right: 75px;
+}
+
+.btn{
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 37px;
+    color: #ee0000;
+    position: relative;
+    left: 125px;
+    text-shadow: 0px 4px 2px rgba(0, 0, 0, 0.32), 0px 1px 0px #dd0000, 0px 2px 0px #cc0000, 0px 3px 0px #bb0000;
+}
+.btn:active {
+    top: 4px;
+	box-shadow: none;
+}
+
+</style>
+
+
+</body>
+</html>

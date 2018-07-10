@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<meta charset="utf-8">
+<title>シフト登録</title>
+
+
+<body >
+
+<div id="str"></div>
+
+
+<script type = "text/javascript">
+	var username;
+	var date;
+	var jobName = [];
+	var hourly_wage = [];
+
+
+	getdata();
+
+	function getdata(){
+        if(window.location.search){
+            /* URLの「?」以降のパラメータを変数nに代入 */
+            var n=window.location.search.substring(1,window.location.search.length);
+
+				console.log(n);
+						var param = n.split('&');
+						username = param[0].replace("name=","");
+						console.log(username);
+						date = param[1].replace("date=","");
+						console.log(date);
+
+
+
+							//document.getElementById("out").innerHTML = "aaaaaaa";
+							loadRegistared("registared_baito.txt");
+        }
+    }
+
+		function loadRegistared(fileName){
+				var cnt = 0;
+
+				httpObj = new XMLHttpRequest();
+				httpObj.open('GET',fileName+"?"+(new Date()).getTime(),true);
+				// ?以降はキャッシュされたファイルではなく、毎回読み込むためのもの
+				httpObj.send(null);
+				httpObj.onreadystatechange = function(){
+					if ( (httpObj.readyState == 4) && (httpObj.status == 200) ){
+
+						paths = httpObj.responseText.split(",");
+						console.log(paths);
+
+						var out = "";
+						for (n = 0; n < paths.length; n++) {
+							paths[n] = paths[n].replace(/\r?\n/g,"");
+							paths[n] = paths[n].replace(" ","");
+							// ユーザ名と等しいならデータ追加
+							if(paths[n] == username){
+								console.log("おなじ！！！");
+								jobName[cnt] = paths[n+1];
+								hourly_wage[cnt] = Number(paths[n+2]);
+								//console.log(typeof wage[cnt]);
+
+
+								console.log(jobName[cnt]);
+
+								console.log(hourly_wage[cnt]);
+								n += 2;
+								cnt++;
+							}
+							out +=  paths[n] + "\n";
+
+						}
+
+
+            console.log("goto_senddata");
+    				send_data();
+
+						// document.getElementById("str").innerHTML = "test";
+					}
+				}
+
+
+		}
+
+		function send_data(){
+      var url = "drop.html";
+      url += window.location.search;
+
+
+      for(var i = 0; i < jobName.length; i++){
+        url += "&jobName=";
+        url += jobName[i];
+        url += "&hourly_wage=";
+        url += hourly_wage[i];
+      }
+      document.getElementById("str").innerHTML = url;
+
+			window.open( url, '_blank' );
+
+
+		}
+
+	// function functionName()
+	//     {
+	//         var select1 = document.forms.formName.selectName1; //変数select1を宣言
+	//         var select2 = document.forms.formName.selectName2; //変数select2を宣言
+	//
+	//         select2.options.length = 0; // 選択肢の数がそれぞれに異なる場合、これが重要
+	//
+	//         if (select1.options[select1.selectedIndex].value == "居酒屋")
+	//             {
+	//                 select2.options[0] = new Option("(平日)900円");
+	//                 select2.options[1] = new Option("(休祝日)1000円");
+	//             }
+	//
+	//         else if (select1.options[select1.selectedIndex].value == "カラオケ")
+	//             {
+	//                 select2.options[0] = new Option("(平日)800円");
+	//                 select2.options[1] = new Option("(休祝日)900円");
+	//             }
+	//
+	//         else if (select1.options[select1.selectedIndex].value == "家庭教師")
+	//             {
+	//                 select2.options[0] = new Option("(平日)1000円");
+	//                 select2.options[1] = new Option("(休祝日)1200円");
+	//             }
+	//     }
+</script>
+
+</body>
+
+
+</html>

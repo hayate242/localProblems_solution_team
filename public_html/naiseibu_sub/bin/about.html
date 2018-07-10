@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>俺のバイト代</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="俺のバイト代">
+<meta name="keywords" content="バイト,履歴,保存,グラフ,お金持ち">
+<link rel="stylesheet" href="css/style.css">
+<script type="text/javascript" src="js/openclose.js"></script>
+<script type="text/javascript">
+
+  var username;
+
+
+  function getdata(){
+    if(window.location.search){
+        /* URLの「?」以降のパラメータを変数nに代入 */
+        var n=window.location.search.substring(1,window.location.search.length);
+        /* テキストボックスにパラメータを表示 */
+      // document.form3.elements["getpram"].value=n;
+          username = n.replace("name=","");
+          console.log(username);
+    }
+  }
+  /* オンロード時に実行 */
+  window.onload=getdata;
+
+  function moveToOtherPage(e){
+    console.log(e);
+
+    location.href = e+"?name="+username;
+  }
+
+</script>
+</head>
+
+<body>
+
+<div id="container">
+
+<header>
+<h1 id="logo"><a id="index.html" onclick="moveToOtherPage(this.id)"><img src="images/busy.png" alt="About us"></a></h1>
+</header>
+
+<nav id="menubar">
+<ul>
+  <li><a id="index.html" onclick="moveToOtherPage(this.id)">ホーム</a></li>
+  <li><a id="PrintJob.cgi" onclick="moveToOtherPage(this.id)">勤務一覧</a></li>
+  <li><a id="gallery.html" onclick="moveToOtherPage(this.id)">About us</a></li>
+</ul>
+</nav>
+
+<div id="contents">
+
+<section>
+
+
+<h2>勤務先の登録</h2>
+<table class="ta1">
+<tr>
+<th colspan="2" class="tamidashi">登録状況</th>
+</tr>
+<tr>
+<th>見出し</th>
+<td>ここに説明など入れて下さい。サンプルテキスト。</td>
+</tr>
+<tr>
+<th>見出し</th>
+<td>ここに説明など入れて下さい。サンプルテキスト。</td>
+</tr>
+<tr>
+<th>見出し</th>
+<td>ここに説明など入れて下さい。サンプルテキスト。</td>
+</tr>
+<tr>
+<th>見出し</th>
+<td>ここに説明など入れて下さい。サンプルテキスト。</td>
+</tr>
+<tr>
+<th>見出し</th>
+<td>ここに説明など入れて下さい。サンプルテキスト。</td>
+</tr>
+<tr>
+<th>見出し</th>
+<td>ここに説明など入れて下さい。サンプルテキスト。</td>
+</tr>
+</table>
+
+<h2>現在の設定</h2>
+<p>このサイトの説明ページです。</p>
+
+
+</section>
+
+
+
+<footer>
+<small>Copyright&copy; <a id="index.html" onclick="moveToOtherPage(this.id)">俺のバイト代</a> All Rights Reserved.</small>
+<!-- <span class="pr">《<a href="http://template-party.com/" target="_blank">Web Design:Template-Party</a>》</span> -->
+</footer>
+
+</div>
+<!--/container-->
+
+</body>
+</html>

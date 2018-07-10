@@ -1,0 +1,56 @@
+/* ================================ */
+/* StyleSheet for All About Samples */
+/* ================================ */
+
+/* 汎用 */
+p#allabout { background-color: #cc0000; color: white; padding: 0.3em; font-size: 80%; }
+p#copyright { font-size: 60%; font-family: Verdana,Arial,sans-serif; margin: 1em 0px; border-top: 1px gray solid; }
+p#returnfunc { text-align:center; margin: 1.5em 0.5em 0.5em 0.5em; }
+div.setbottom { position:absolute; bottom:0%; }
+h1 { font-size: 140%; }
+h2 { border-left: #cc0000 0.4em solid; padding: 0.1em 0.3em; font-size: 120%; }
+.attention { margin: 1em 0px; padding: 0.5em; border: 2px solid #cc0000; background-color: #fff0f0; }
+.note { font-size: 80%; }
+
+/* -------------- */
+/* All About 共通 */
+/* -------------- */
+pre.pro-source{
+	background-color : #eeeeee;
+	padding: 4px 4px 4px 20px;
+	margin: 1em 0px;
+	line-height: 1.4em;
+	overflow: auto;
+}
+
+div.centerbox {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300px;         /* 表示させたい横幅 */
+  height: 300px;        /* 表示させたい高さ */
+  margin-left: -150px;  /* マイナス「横幅÷2」の値 */
+  margin-top: -150px;   /* マイナス「高さ÷2」の値 */
+  overflow: auto;       /* 内容がはみ出る場合にスクロールさせるなら「auto」、隠す場合には「hidden」 */
+  background-color: #ffcccc;
+  color: #000000;
+}
+div.centerbox h1 {
+  font-size: 130%;
+  text-align: center;
+  background-color: #cc0000;
+  color: #fffff0;
+  margin: 10px;
+}
+div.centerbox p {
+  margin: 0px;
+  padding: 1em;
+  line-height: 1.45;
+}
+
+.centerbox {
+  border: 1px solid #aaa;
+  width: 300px;
+  text-align: center;
+
+}

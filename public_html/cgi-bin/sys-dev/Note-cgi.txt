@@ -1,0 +1,8 @@
+cgilibを使うとき
+gcc -Wall -o 5.cgi 5.c -I cgilib-0.7 cgilib-0.7/{cookies,aux,cgi}.c
+
+firefox コマンド
+firefox http://ssh.cs.ehime-u.ac.jp/~e1589naka/cgi-bin/sys-dev/gaiseibu/5.cgi
+
+
+http://ssh.cs.ehime-u.ac.jp/~e1589naka/iwasaki/all_c.html

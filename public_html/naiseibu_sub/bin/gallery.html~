@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>俺のバイト代</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="About us">
+<meta name="keywords" content="キーワード１,キーワード２,キーワード３,キーワード４,キーワード５">
+<link rel="stylesheet" href="css/style.css">
+<script type="text/javascript" src="js/openclose.js"></script>
+<script type="text/javascript">
+
+  var username;
+
+
+  function getdata(){
+    if(window.location.search){
+        /* URLの「?」以降のパラメータを変数nに代入 */
+        var n=window.location.search.substring(1,window.location.search.length);
+        /* テキストボックスにパラメータを表示 */
+      // document.form3.elements["getpram"].value=n;
+          username = n.replace("name=","");
+          console.log(username);
+    }
+  }
+  /* オンロード時に実行 */
+  window.onload=getdata;
+
+  function moveToOtherPage(e){
+    console.log(e);
+
+    location.href = e+"?name="+username;
+  }
+
+</script>
+</head>
+
+<body>
+
+<div id="container">
+
+<header>
+<h1 id="logo"><a id="index.html" onclick="moveToOtherPage(this.id)"><img src="images/logo.png" alt="About us"></a></h1>
+</header>
+
+<nav id="menubar">
+<ul>
+  <li><a id="index.html" onclick="moveToOtherPage(this.id)">ホーム</a></li>
+  <li><a id="PrintJob.cgi" onclick="moveToOtherPage(this.id)">勤務一覧</a></li>
+  <li><a id="gallery.html" onclick="moveToOtherPage(this.id)">About us</a></li>
+</ul>
+</nav>
+
+<div id="contents">
+
+<section>
+
+<h2>Gallery</h2>
+<p>システム開発演習2017TeamHです．<span class="color1">なんとか</span>完成させることができて感無量です．
+サムネイルをクリックすると、画像本体を新しいウィンドウで開く設定になっています。</p>
+
+<div class="list">
+<a href="images/hayate.jpg" target="_blank">
+<figure><img src="images/hayate.jpg" alt="写真の説明"></figure>
+</a>
+</div>
+
+<div class="list">
+<a href="images/kaji.jpeg" target="_blank">
+<figure><img src="images/kaji.jpeg" alt="写真の説明"></figure>
+</a>
+</div>
+
+<div class="list">
+<a href="images/kodama_image.jpg" target="_blank">
+<figure><img src="images/kodama_image.jpg" alt="写真の説明"></figure>
+</a>
+</div>
+
+<div class="list">
+<a href="images/sample4.jpg" target="_blank">
+<figure><img src="images/sample4.jpg" alt="写真の説明"></figure>
+</a>
+</div>
+
+<div class="list">
+<a href="images/sample5.jpg" target="_blank">
+<figure><img src="images/sample5.jpg" alt="写真の説明"></figure>
+</a>
+</div>
+
+<div class="list">
+<a href="images/T.jpg" target="_blank">
+<figure><img src="images/T.jpg" alt="写真の説明"></figure>
+</a>
+</div>
+
+<div class="list">
+<a href="images/E.jpg" target="_blank">
+<figure><img src="images/E.jpg" alt="写真の説明"></figure>
+</a>
+</div>
+
+<div class="list">
+<a href="images/A.jpg" target="_blank">
+<figure><img src="images/A.jpg" alt="写真の説明"></figure>
+</a>
+</div>
+
+<div class="list">
+<a href="images/M.jpg" target="_blank">
+<figure><img src="images/M.jpg" alt="写真の説明"></figure>
+</a>
+</div>
+
+<div class="list">
+<a href="images/H.png" target="_blank">
+<figure><img src="images/H.png" alt="写真の説明"></figure>
+</a>
+</div>
+
+</section>
+
+</div>
+<!--/contents-->
+
+<footer>
+<small>Copyright&copy; <a id="index.html" onclick="moveToOtherPage(this.id)">俺のバイト代</a> All Rights Reserved.</small>
+<!-- <span class="pr">《<a href="http://template-party.com/" target="_blank">Web Design:Template-Party</a>》</span> -->
+</footer>
+
+</div>
+<!--/container-->
+
+</body>
+</html>

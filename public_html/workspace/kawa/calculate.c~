@@ -1,0 +1,16 @@
+#include <stdio.h>
+int main()
+{
+  int x;
+ int i, maximum = -1;
+ for (i=0; i<10; i++)
+   {
+  scanf("%d", &x);
+  if (maximum < x)
+    {
+      maximum = x;
+    }
+ }
+ printf("Maximum = %d¥n", maximum);
+ return 0;
+}

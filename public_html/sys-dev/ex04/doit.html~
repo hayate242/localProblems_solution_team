@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>JavaScript | 情報システム開発演習</title>
+    <script type="text/javascript">
+
+function doit(elem) {
+	console.log(elem);
+      var elem1 = document.getElementById("bb");
+     // elem1.innerHTML = "<body id="bb" background-color: "+elem+">";
+	    
+}
+
+    </script>
+    <style type="text/css">
+
+    </style>
+  </head>
+
+  <body id="bb">
+    <p> current color is:</p>
+    <div id="current" style="border: 1px black solid; width: 200px; height: 200px"> </div>
+    
+    <p>click one of followings:</p>
+    <span id="red" onclick="doit(this)">red</span>
+    <span onclick="doit(this)">blue</span>
+    <span onclick="doit(this)">green</span>
+    <span onclick="doit(this)">yellow</span>
+  </body>
+</html>
+
+<!--
+    Local Variables:
+    mode: html
+    fill-column: 210
+    End:
+-->
+

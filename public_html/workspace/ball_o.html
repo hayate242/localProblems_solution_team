@@ -1,0 +1,138 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<p>
+  <span class="letter" data-letter="B">B</span>
+  <span class="letter" data-letter="A">A</span>
+  <span class="letter" data-letter="L">L</span>
+  <span class="letter" data-letter="L">L</span> 
+ </p>
+<p>
+  <span class="letter" data-letter="O">O</span>
+  <span class="letter" data-letter="U">U</span>
+  <span class="letter" data-letter="T">T</span>
+  <span class="letter" data-letter="!">!</span></p>
+ </div>
+
+<style>
+@import url(https://fonts.googleapis.com/css?family=Lato:900);
+*, *:before, *:after{
+  box-sizing:border-box;
+}
+body{
+ font-family: 'Lato', sans-serif;
+  margin: 20px 0;
+  text-align: center;
+  top: 100px;
+  right: 50px;
+  left: 0px;
+  bottom: 0px;
+  background-color:#dcc2ff;
+}
+div.foo{
+  text-align: center;
+ 
+}
+.letter{
+  display: inline-block;
+  font-weight: 900;
+  font-size: 100px;
+  margin: 0.2em;
+  position: relative;
+  color: #ffffff;
+  transform-style: preserve-3d;
+  perspective: 400;
+  z-index: 1;
+}
+.letter:before, .letter:after{
+  position:absolute;
+  content: attr(data-letter);
+  transform-origin: top left;
+  top:0;
+  left:0;
+}
+.letter, .letter:before, .letter:after{
+  transition: all 0.3s ease-in-out;
+}
+.letter:before{
+  color: #d0b0ff;
+  text-shadow: 
+    -1px 0px 1px rgba(255,255,255,.8),
+    1px 0px 1px rgba(0,0,0,.8);
+  z-index: 3;
+  transform:
+    rotateX(0deg)
+    rotateY(-15deg)
+    rotateZ(0deg);
+}
+.letter:after{
+  color: rgba(0,0,0,.11);
+  z-index:2;
+  transform:
+    scale(1.08,1)
+    rotateX(0deg)
+    rotateY(0deg)
+    rotateZ(0deg)
+    skew(0deg,1deg);
+}
+.letter:hover:before{
+  color: #ffbdea;
+  transform:
+    rotateX(0deg)
+    rotateY(-40deg)
+    rotateZ(0deg);
+}
+.letter:hover:after{
+  transform:
+    scale(1.08,1)
+    rotateX(0deg)
+    rotateY(40deg)
+    rotateZ(0deg)
+    skew(0deg,22deg);
+}
+</style>
+
+<br><br>
+
+<!-- hrefのなかみを環境に合わせて変更してえええええええええええええください -->
+<p><span style="margin-right:100px">
+<a href="#" class="btn">TOP</a></span>
+<span style="margin-left:50px">
+<a href="#" class="btn">RETURN</a></span></p>
+
+<style>
+.btn{
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    color: #f9a9ae;
+    width: 120px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 5px;
+    text-align: center;
+    vertical-align: middle;
+    overflow: hidden;
+    font-weight: bold;
+    background-image: -webkit-linear-gradient(#fed6e3 0%, #ffaaaa 100%);
+    background-image: linear-gradient(#fed6e3 0%, #ffaaaa 100%);
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.66);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.28);
+}
+
+.btn:active{/*押したとき*/
+    -ms-transform: translateY(2px);
+    -webkit-transform: translateY(2px);
+    transform: translateY(2px);/*沈むように*/
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
+    background-image: -webkit-linear-gradient(#fed6e3 0%, #ffbcbc 100%);
+    background-image: linear-gradient(#fed6e3 0%, #ffbcbc 100%);/*グラデーションを明るく*/
+}
+</style>
+
+
+
+</body>
+</html>

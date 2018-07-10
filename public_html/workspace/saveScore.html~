@@ -1,0 +1,13 @@
+
+<html>
+<body>
+<h1>Save your score!</h1>
+	<form action="/~inamoto/cgi-bin/CGI-simple-dump.cgi" method="GET">
+      <h2>名前を入力してください</h2>
+      <ul>
+	<li><input type="text" value="" name="name">
+	
+      <input type="submit" value="送信"> <input type="reset" value="リセット">
+    </form>
+
+</body></html>

@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct job{
+  char Jobname[16];
+  int wage;
+};
+
+
+int main(void)
+{
+  FILE *fp;
+  struct job data[100];
+  int i, length, cnt=2;//cntは渡された番号
+  
+
+  fp = fopen("parttimejob.txt", "r");
+  if (fp == NULL){
+    printf("ファイルが開けません\n");
+  }
+
+  i = 0;
+  while ((fscanf(fp, "%s %d", data[i].Jobname, &data[i].wage)) != EOF){
+    printf("%s %d\n",  data[i].Jobname, data[i].wage);
+    i++;
+  }
+  length = i;
+  i = 0;
+  fclose(fp);
+
+
+
+ fp = fopen("parttimejob.txt", "w");
+
+ while(i != length){
+   if(i == cnt){
+     i++;
+     continue;
+   }
+   fprintf(fp, "%s %d\n", data[i].Jobname, data[i].wage);
+   i++;
+}
+
+ fclose(fp);
+}
+

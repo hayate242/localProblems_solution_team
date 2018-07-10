@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ja">
+<meta charset="utf-8">
+<title>シフト登録</title>
+<head>
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="css/format.css"> 
+</head>
+
+<body bgcolor onLoad="put_Jobs()">
+	<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+	<div id="centerbox">
+		<div class="centerbox">
+
+			<form name="input_data" method="post" action="">
+				<h1>シフト登録</h1>
+
+				<p><!--選択肢その1-->
+				<b>勤務先：</b>
+				<select id="jobName">
+
+				</select></p>
+
+
+		<!--	選択肢その2（選択肢その1の項目によって変化）-->
+				<!-- <p>
+				<b> 時給：</b>
+				<select name = "selectName2">
+				</select></p> -->
+
+				<div>
+					<b> 時給：</b>
+					<select id="wage">
+			     <!-- <option value="">時給</option>  -->
+					</select>
+				</div>
+
+				<div>
+					<b> 時間：</b>
+					<select id="hour">
+			     <!-- <option value="">時給</option>  -->
+					</select>
+				</div>
+
+				<button type="button" name="aaa" value="aaa">
+				<font type="button" class="btn btn-info" onclick="save_work_history();">登録</font>
+				</button>
+			</form>
+			<br>
+		<input type="button" value="閉じる" onclick="self.close();" onkeypress="self.close();">
+
+
+
+	</div>
+</div>
+<script type = "text/javascript">
+	var username;
+	var date;
+	var jobName = [];
+	var hourly_wage = [];
+
+	getdata();
+
+	function getdata(){
+        if(window.location.search){
+            /* URLの「?」以降のパラメータを変数nに代入 */
+            var n=window.location.search.substring(1,window.location.search.length);
+
+				console.log(n);
+						var param = n.split('&');
+						username = param[0].replace("name=","");
+						console.log(username);
+						date = param[1].replace("date=","");
+						console.log(date);
+
+
+
+							//document.getElementById("out").innerHTML = "aaaaaaa";
+							loadRegistared("registared_baito.txt");
+        }
+    }
+
+		function loadRegistared(fileName){
+				var cnt = 0;
+
+				httpObj = new XMLHttpRequest();
+				httpObj.open('GET',fileName+"?"+(new Date()).getTime(),true);
+				// ?以降はキャッシュされたファイルではなく、毎回読み込むためのもの
+				httpObj.send(null);
+				httpObj.onreadystatechange = function(){
+					if ( (httpObj.readyState == 4) && (httpObj.status == 200) ){
+
+						paths = httpObj.responseText.split(",");
+						console.log(paths);
+
+						var out = "";
+						for (n = 0; n < paths.length; n++) {
+							paths[n] = paths[n].replace(/\r?\n/g,"");
+							paths[n] = paths[n].replace(" ","");
+							// ユーザ名と等しいならデータ追加
+							if(paths[n] == username){
+								console.log("おなじ！！！");
+								jobName[cnt] = paths[n+1];
+								hourly_wage[cnt] = Number(paths[n+2]);
+								//console.log(typeof wage[cnt]);
+
+
+								// console.log(jobName[cnt]);
+
+								// console.log(hourly_wage[cnt]);
+								n += 2;
+								cnt++;
+							}
+							out +=  paths[n] + "\n";
+
+						}
+
+
+
+						put_Jobs();
+
+					}
+				}
+
+
+
+		}
+
+		function put_Jobs(){
+
+
+			// var hourly_wage = [100,200,300];
+			console.log("putJob!!");
+			// console.log("hourly_wage.length "+hourly_wage.length);
+
+			for ( var i= 0; i < jobName.length; i++ ) {
+				var select = document.getElementById('jobName');
+				// console.log("jobName "+jobName);
+			    var option = document.createElement('option');
+
+			    option.setAttribute('value',jobName[i]);
+			    option.innerHTML = jobName[i];
+
+			    select.appendChild(option);
+			}
+
+			for ( var i= 0; i < hourly_wage.length; i++ ) {
+				var select = document.getElementById('wage');
+				// console.log("hourly_wage "+hourly_wage);
+			    var option = document.createElement('option');
+
+			    option.setAttribute('value', hourly_wage[i]);
+			    option.innerHTML = hourly_wage[i]+"円";
+
+			    select.appendChild(option);
+			}
+
+			for(var i=1; i <= 24; i++){
+				var select = document.getElementById('hour');
+				// console.log("hourly_wage "+hourly_wage);
+			    var option = document.createElement('option');
+
+			    option.setAttribute('value', i);
+			    option.innerHTML = i+"時間";
+
+			    select.appendChild(option);
+			}
+		}
+
+		function save_work_history(){
+			
+			var select1 = document.forms.input_data.jobName; //変数select1を宣言
+      var select2 = document.forms.input_data.wage; //変数select2を宣言
+			var select3 = document.forms.input_data.hour;
+      // select2.options.length = 0; // 選択肢の数がそれぞれに異なる場合、これが重要
+			var selected_job = select1.options[select1.selectedIndex].value;
+			var selected_wage = select2.options[select2.selectedIndex].value;
+			var selected_hour = select3.options[select3.selectedIndex].value;
+
+			console.log(select1.options[select1.selectedIndex].value);
+
+			console.log(select2.options[select2.selectedIndex].value);
+			console.log(selected_hour);
+
+			var money = Number(selected_wage)*Number(selected_hour);
+			console.log(money);
+
+			// var formData = new FormData();
+			// formData.append(username, money, "work_history.txt");
+			var url = "save_work_history.cgi?";
+      url += "name="+username+"&jobName="+selected_job+"&date="+date+"&money="+money;
+
+			console.log(url);
+
+
+			window.location.href = url;
+
+
+		}
+
+	// function functionName()
+	//     {
+	//         var select1 = document.forms.formName.selectName1; //変数select1を宣言
+	//         var select2 = document.forms.formName.selectName2; //変数select2を宣言
+	//
+	//         select2.options.length = 0; // 選択肢の数がそれぞれに異なる場合、これが重要
+	//
+	//         if (select1.options[select1.selectedIndex].value == "居酒屋")
+	//             {
+	//                 select2.options[0] = new Option("(平日)900円");
+	//                 select2.options[1] = new Option("(休祝日)1000円");
+	//             }
+	//
+	//         else if (select1.options[select1.selectedIndex].value == "カラオケ")
+	//             {
+	//                 select2.options[0] = new Option("(平日)800円");
+	//                 select2.options[1] = new Option("(休祝日)900円");
+	//             }
+	//
+	//         else if (select1.options[select1.selectedIndex].value == "家庭教師")
+	//             {
+	//                 select2.options[0] = new Option("(平日)1000円");
+	//                 select2.options[1] = new Option("(休祝日)1200円");
+	//             }
+	//     }
+</script>
+
+</body>
+
+
+</html>

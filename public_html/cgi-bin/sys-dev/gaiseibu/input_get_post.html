@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+    <title>cgi-dump</title>
+  </head>
+
+  <body>
+    <h1>送信方法がGET</h1>
+    <form action="/~inamoto/cgi-bin/CGI-simple-dump.cgi" method="GET">
+      <h2>input</h2>
+      <ul>
+	<li>type 属性がtext <input type="text" value="input plz." name="GET-text">
+	</li>
+	<li>type 属性がpassword <input type="password" value="password plz." name="GET-password">
+	</li>
+	<li>type 属性がradio <input type="radio" value="yes" name="レディオ">yes
+	    <input type="radio" checked value="いいえ" name="レディオ">いいえ
+	</li>
+	<li>type 属性がcheckbox
+	  <input type="checkbox" value="apple" name="GET-checkbox">apple <input type="checkbox" value="みかん" name="GET-checkbox">みかん <input type="checkbox" value="いちご" name="GET-checkbox">いちご
+	</li>
+	<li>type 属性がhidden <input type="hidden" value="hidden value" name="GET-hidden">
+	</li>
+      </ul>
+
+      <h2>textarea</h2>
+      <textarea name="GET-textarea">テキストエリア</textarea>
+
+      <h2>select</h2>
+      <select name="GET-select">
+	<option value="選択肢1">選択肢1</option> <option value="option 2">option 2</option> <option value="選択肢3">選択肢3</option>
+      </select>
+      <br>
+      <input type="submit" value="送信"> <input type="reset" value="リセット">
+    </form>
+
+    <hr>
+
+    <h1>送信方法がPOST</h1>
+    <form action="/~inamoto/cgi-bin/CGI-simple-dump.cgi" method="POST">
+      <h2>input</h2>
+      <ul>
+	<li>type 属性がtext <input type="text" value="input plz." name="POST-text">
+	</li>
+	<li>type 属性がpassword <input type="password" value="password plz." name="POST-password">
+	</li>
+	<li>type 属性がradio <input type="radio" value="yes" name="レディオ">yes
+	    <input type="radio" checked value="いいえ" name="レディオ">いいえ
+	</li>
+	<li>type 属性がcheckbox
+	  <input type="checkbox" value="apple" name="POST-checkbox">apple <input type="checkbox" value="みかん" name="POST-checkbox">みかん <input type="checkbox" value="いちご" name="POST-checkbox">いちご
+	</li>
+	<li>type 属性がhidden <input type="hidden" value="hidden value" name="POST-hidden">
+	</li>
+      </ul>
+
+      <h2>textarea</h2>
+      <textarea name="POST-textarea">テキストエリア</textarea>
+      <br>
+      <input type="submit" value="送信"> <input type="reset" value="リセット">
+    </form>
+
+  </body>
+</html>
+

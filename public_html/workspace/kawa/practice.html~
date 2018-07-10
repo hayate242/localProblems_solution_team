@@ -1,0 +1,13 @@
+<html> 
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf
+-8"> 
+<title>確認</title> 
+</head> 
+<body> 
+<form action="postmail.php" method="POST">   
+<input type="reset" value="    クリア    ">&nbsp;&nbsp; 
+<input type="submit" value="内容を確認する"> 
+</form> 
+</body> 
+</html> 

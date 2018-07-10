@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
+#include <time.h>
 
 /* ユーザ定義関数の宣言 */
 void SetSignal(int SignalName);
