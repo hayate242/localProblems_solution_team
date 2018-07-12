@@ -49,3 +49,26 @@
 </form>
 </body>
 </html>
+
+
+
+	<?php
+			# $_POSTの要素数を数え、フォームがPOSTされたかどうか判定します。
+			if (count($_POST) > 0) {
+				$year  = @$_POST['year'];
+				$month = @$_POST['month'];
+				$day   = @$_POST['day'];
+
+				// var_dump($year, $month, $day);
+				if (checkdate($month, $day, $year)) {
+					print "<script language=javascript>loadCSV('data/".$year.$month.$day.".csv')</script>";
+				} else {
+					echo '<p>' . h($year) . '年' . h($month) . '月' . h($day) .
+							'日は正しい日付ではありません。</p>';
+				}
+			}
+
+			function h($string) { // HTMLでのエスケープ処理をする関数
+				return htmlspecialchars($string, ENT_QUOTES);
+			}
+	?>

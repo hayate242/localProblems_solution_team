@@ -13,6 +13,7 @@
 #include <unistd.h>
 #include <signal.h>
 
+
 #define  DESTSERV "192.168.29.7"
 #define  DESTPORT 2000
 // #define  MESSAGE  "GET / HTTP/1.0\r\nHOST: 192.168.29.7\r\n\r\n"
@@ -38,12 +39,14 @@ char year[4];
 char month[2];
 char date[2];
 char *month0;
-char zero[1] = "0";
 char csv[4] = ".csv";
 
-void sigcatch(int);
+void save_data(int);
+void mysleep(double);
+
 
 int main() {
+    int microsecond = 0.997 * 1000000;
 
     hostent = gethostbyname(DESTSERV); /* lookup IP */
     printf("%s\n", hostent->h_name);
@@ -61,20 +64,27 @@ int main() {
     server.sin_port = htons(DESTPORT);
 
     /* Set handler to SIGALRM */
-    if (SIG_ERR == signal(SIGALRM, sigcatch)) {
+    if (SIG_ERR == signal(SIGALRM, save_data)) {
         printf("failed to set signal handler.\n");
     }
 
+  time_t time1, time2;
     /* Receive data */
     while (1) {   
+        time(&time1);
         alarm(1);
         sleep(1);
+        time(&time2);
+        printf("%f秒\n", difftime(time2,time1));
+        printf("%timef秒\n", &time1);
+        // mysleep(0.997);
+        // usleep(microsecond); //動作しなかった
     }
     close(fd);
     return 0;
 }
 
-void sigcatch(int sig) {
+void save_data(int sig) {
     char *time_format;
 
     // making socket
@@ -112,7 +122,17 @@ void sigcatch(int sig) {
     printf("%2d:%2d:%2d,%s", local->tm_hour, local->tm_min, local->tm_sec, buf);
     fprintf( fp, "%2d:%2d:%2d,%s", local->tm_hour, local->tm_min, local->tm_sec, buf);
     fclose( fp );
-
+    shutdown(fd, 2);
     close(fd);
 }
 
+void mysleep(double second) {
+    // time_t now = second * CLOCKS_PER_SEC + clock();
+    time_t time1, time2;
+    time(&time1);
+    time(&time2);
+    while (difftime(time2,time1) > second) {
+        time(&time2);
+        printf("%f秒\n", difftime(time2,time1));
+    }
+}

@@ -13,6 +13,7 @@ let DATANUM = 6;
 // responded data
 var res = [];
 var updateFlag = false;
+
 var chart_data = {
     x: [],
     y: [],
@@ -81,9 +82,10 @@ function update_layout() {
 }
 function loadCSV(fileName){
     var cnt = 0;
-
+    var alertFlag =true;
     httpObj = new XMLHttpRequest();
-    httpObj.open('GET',fileName+"?"+(new Date()).getTime(),true);
+    // httpObj.open('GET',fileName+"?"+(new Date()).getTime(),true);
+    httpObj.open('GET',fileName);
     // ?以降はキャッシュされたファイルではなく、毎回読み込むためのもの
     httpObj.send(null);
     httpObj.onreadystatechange = function(){
@@ -94,12 +96,20 @@ function loadCSV(fileName){
             parseData(paths);
             make_chart_data();
             plot_chart();
+        }else if((httpObj.status == 404) && alertFlag == true ){
+            alert("その日は観測データがありません");
+            alertFlag = false;
+            $(function() {
+                $('.test').empty();
+            });
         }
     }
 }
 
 // main
-loadCSV('../data/20180628.csv');
+window.onload = function(){
+    loadCSV('../data/20180628.csv');
+}
 // window.onload = function(){
 //     //1000ミリ秒（1秒）毎に関数「loadCSV()」を呼び出す
 //     setInterval("loadCSV('../data/20180628.csv')", 10000);

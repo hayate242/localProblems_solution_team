@@ -8,6 +8,6 @@ $(function() {
       var date = $('.selected_year').val() + "/" + $('.selected_month').val() + "/" + $('.selected_day').val();
       //選択したvalue値をp要素に出力
       $('.test').text(date+"のグラフ");
-        loadCSV('data/'+ val + '.csv');
+      loadCSV('data/'+ val + '.csv');
     });
   });
