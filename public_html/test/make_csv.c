@@ -42,8 +42,6 @@ char *month0;
 char csv[4] = ".csv";
 
 void save_data(int);
-void mysleep(double);
-
 
 int main() {
     int microsecond = 0.997 * 1000000;
@@ -67,24 +65,13 @@ int main() {
     if (SIG_ERR == signal(SIGALRM, save_data)) {
         printf("failed to set signal handler.\n");
     }
-
-  time_t time1, time2;
-    /* Receive data */
-    while (1) {   
-        time(&time1);
-        alarm(1);
-        sleep(1);
-        time(&time2);
-        printf("%f秒\n", difftime(time2,time1));
-        printf("%timef秒\n", &time1);
-        // mysleep(0.997);
-        // usleep(microsecond); //動作しなかった
-    }
-    close(fd);
+    alarm(1); // call savedata 1 sec later
+    while(1); // wait forever
     return 0;
 }
 
 void save_data(int sig) {
+    alarm(1);
     char *time_format;
 
     // making socket
@@ -124,15 +111,4 @@ void save_data(int sig) {
     fclose( fp );
     shutdown(fd, 2);
     close(fd);
-}
-
-void mysleep(double second) {
-    // time_t now = second * CLOCKS_PER_SEC + clock();
-    time_t time1, time2;
-    time(&time1);
-    time(&time2);
-    while (difftime(time2,time1) > second) {
-        time(&time2);
-        printf("%f秒\n", difftime(time2,time1));
-    }
 }
