@@ -42,7 +42,7 @@ connect() によりサーバに接続する
 write() でサーバにリクエストを送る
 read() でレスポンスを受信する
 close() によりソケットを閉じる
-http://blog.majide.com/2009/02/socket-programming-client/
+http://blog.majide.com/2009/02/socket-programming-client/1
 
 ## signal
 http://www.c-lang.net/general56/index.html
