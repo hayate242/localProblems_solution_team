@@ -3,10 +3,12 @@
 #include <string.h> /* bzero */
 
 #include <sys/types.h> /* netinet/in.h */
-#include <sys/socket.h> /* AF_INET */
-#include <netinet/in.h> /* sockaddr_in */
-#include <netdb.h> /* gethostbyname */
-#include <sys/uio.h>
+#include <Winsock2.h> /* AF_INET */
+#include <Windows.h>
+#include <process.h>
+// #include <netinet/in.h> /* sockaddr_in */
+// #include <netdb.h> /* gethostbyname */
+// #include <sys/uio.h>
 #include <sys/param.h>
 #include <unistd.h>
 #include <time.h>
@@ -46,11 +48,11 @@ char csv[4] = ".csv";
 void save_data(int);
 
 int main() {
-    struct itimerval it;
-    it.it_interval.tv_sec = DELAY_SEC;         // タイマーインターバルの設定
-    it.it_interval.tv_usec = 0;
-    it.it_value.tv_sec = DELAY_SEC;
-    it.it_value.tv_usec = 0;
+    // struct itimerval it;
+    // it.it_interval.tv_sec = DELAY_SEC;         // タイマーインターバルの設定
+    // it.it_interval.tv_usec = 0;
+    // it.it_value.tv_sec = DELAY_SEC;
+    // it.it_value.tv_usec = 0;
     
 
     hostent = gethostbyname(DESTSERV); /* lookup IP */
@@ -69,14 +71,15 @@ int main() {
     server.sin_port = htons(DESTPORT);
 
     // /* Set handler to SIGALRM */
-    if (SIG_ERR == signal(SIGALRM, save_data)) {
-        printf("failed to set signal handler.\n");
-    }
+    // if (SIG_ERR == signal(SIGALRM, save_data)) {
+    //     printf("failed to set signal handler.\n");
+    // }
 
-    setitimer(ITIMER_REAL, &it, 0); 
-    while(1){
-        pause();
-    } 
+    // setitimer(ITIMER_REAL, &it, 0); 
+    // while(1){
+    //     pause();
+    // } 
+    save_data(12);
     return 0;
 }
 
