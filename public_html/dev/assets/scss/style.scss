@@ -1,0 +1,22 @@
+// ネストのテスト
+div {
+    p {
+      font-weight: bold;
+    }
+  }
+   
+  // 変数のテスト
+  $fontColor: #525252;
+   
+  h1 {
+    color: $fontColor;
+  }
+
+  h2 {
+    color: $fontColor;
+    font-size: 40px;
+  }
+  div {
+    font-size: 10px;
+  }
+  
