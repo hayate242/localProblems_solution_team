@@ -54,7 +54,8 @@ gulp.task('js.uglify', function() {
       .pipe(uglify('bundle.min.js'))
       .pipe(gulp.dest('assets/main-js/'));
 });
-gulp.task('js', gulp.series('js.concat', 'js.uglify'))
+gulp.task('js', gulp.series('js.concat'))
+// gulp.task('js', gulp.series('js.concat', 'js.uglify'))
 
 
 
