@@ -21,5 +21,3 @@ var chart = new CanvasJS.Chart("columnChartContainer", {
     ]
 });
 chart.render();
-    
-    
