@@ -1,22 +1,42 @@
 // ネストのテスト
 div {
-    p {
-      font-weight: bold;
-    }
+  p {
+    font-weight: bold;
   }
+}
    
-  // 変数のテスト
-  $fontColor: #525252;
-   
-  h1 {
-    color: $fontColor;
-  }
+// 変数のテスト
+$fontColor: #525252;
+body {
+  margin-left: 20px;
+  margin-right: 20px;
+  width: 80%;
+}
+h1 {
+  color: $fontColor;
+}
 
-  h2 {
-    color: $fontColor;
-    font-size: 40px;
-  }
-  div {
-    font-size: 10px;
-  }
-  
+h2 {
+  color: $fontColor;
+  font-size: 30px;
+  text-align: center;
+}
+div {
+  font-size: 10px;
+}
+.frame {
+  border: medium solid #525252;
+}
+.chart {
+  width: 80%;
+  margin: 0 auto;
+}
+.amchart_p {
+  margin-left: 20px;
+  font-size: 15px;
+}
+
+a {
+  font-size: 20px;
+  padding-bottom: 10px;
+}
